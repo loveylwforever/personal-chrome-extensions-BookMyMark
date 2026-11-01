@@ -17,7 +17,8 @@ export default defineConfig({
   },
   manifest: {
     name: 'BookMyMark',
-    description: '精致的 Chrome 书签管理器',
+    description:
+      '精致的新标签页书签管理器：目录导航、魔法整理与探活，首页待办 / 甘特 / 番茄钟，本地 JSON 与 URL 工具。',
     permissions: ['bookmarks', 'storage', 'favicon', 'activeTab'],
     // DNS probe and the public-IP card. Not every website.
     host_permissions: [

@@ -1,6 +1,6 @@
 {
   "name": "bookmymark",
-  "description": "Chrome bookmark manager inspired by OhMyNote nav",
+  "description": "Polished Chrome new-tab bookmark manager with todos, Gantt, pomodoro, and local JSON tools",
   "private": true,
   "license": "MIT",
   "version": "0.6.0",
