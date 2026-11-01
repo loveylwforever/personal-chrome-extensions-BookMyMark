@@ -2,6 +2,8 @@
 
 Chrome 书签管理扩展，基于 [WXT](https://wxt.dev) + Vue 3，新标签页体验对齐 OhMyNote 网址导航。
 
+License: [MIT](./LICENSE)
+
 ## 开发
 
 ```sh

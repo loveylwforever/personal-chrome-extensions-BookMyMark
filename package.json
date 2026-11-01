@@ -2,6 +2,7 @@
   "name": "bookmymark",
   "description": "Chrome bookmark manager inspired by OhMyNote nav",
   "private": true,
+  "license": "MIT",
   "version": "0.6.0",
   "type": "module",
   "scripts": {
