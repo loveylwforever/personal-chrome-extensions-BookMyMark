@@ -1,0 +1,5416 @@
+.bmm-host {
+  --nav-card-radius: var(--radius);
+  --nav-item-radius: calc(var(--radius) - 2px);
+  --nav-tab-radius: calc(var(--radius) - 2px);
+  --nav-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.bmm-toast {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  z-index: 1000;
+  max-width: min(90vw, 28rem);
+  padding: 0.7rem 1.2rem;
+  border-radius: calc(var(--radius) + 2px);
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  box-shadow: var(--shadow-float);
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 550;
+  line-height: 1.4;
+  text-align: center;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.bmm-toast-enter-active,
+.bmm-toast-leave-active {
+  transition:
+    opacity 0.22s var(--nav-ease),
+    transform 0.22s var(--nav-ease);
+}
+
+.bmm-toast-enter-from,
+.bmm-toast-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-0.5rem);
+}
+
+.bmm-toolbar {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.2);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.2);
+}
+
+.bmm-toolbar-brand {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.bmm-toolbar-title {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.bmm-toolbar-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: var(--nav-tab-radius);
+  color: color-mix(in oklab, #c47a3a 85%, var(--foreground));
+  transition:
+    background 0.16s var(--nav-ease),
+    color 0.16s var(--nav-ease);
+}
+
+.bmm-toolbar-tip:hover {
+  background: color-mix(in oklab, #c47a3a 14%, transparent);
+  color: #b56a2e;
+}
+
+.bmm-toolbar-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.bmm-toolbar-center > * {
+  pointer-events: auto;
+}
+
+.bmm-toolbar-end {
+  display: inline-flex;
+  margin-left: auto;
+  flex-shrink: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 0.32rem;
+}
+
+/* —— Center clock / calendar chip —— */
+.bmm-clock-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: 2rem;
+  padding: 0 0.55rem 0 0.28rem;
+  border-radius: 0.6rem;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, var(--foreground));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--foreground) 4.5%, var(--glass-muted)) 0%,
+      var(--glass-muted) 48%,
+      color-mix(in oklab, var(--primary) 7%, var(--glass-muted)) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #fff 12%, transparent),
+    0 1px 2px color-mix(in oklab, var(--foreground) 4%, transparent);
+  user-select: none;
+  -webkit-user-select: none;
+  white-space: nowrap;
+}
+
+.bmm-clock-cal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-width: 0;
+}
+
+.bmm-clock-day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 0.4rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--primary) 18%, var(--background)) 0%,
+      color-mix(in oklab, var(--primary) 8%, var(--background)) 100%
+    );
+  border: 1px solid color-mix(in oklab, var(--primary) 28%, var(--border));
+  color: color-mix(in oklab, var(--primary) 55%, var(--foreground));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.bmm-clock-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06rem;
+  line-height: 1;
+}
+
+.bmm-clock-ym {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+}
+
+.bmm-clock-wd {
+  font-size: 0.68rem;
+  font-weight: 650;
+  color: var(--foreground);
+}
+
+.bmm-clock-rail {
+  width: 1px;
+  height: 1.15rem;
+  border-radius: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in oklab, var(--foreground) 18%, transparent),
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+.bmm-clock-time {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.92rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--foreground);
+  line-height: 1;
+}
+
+.bmm-clock-colon {
+  margin: 0 0.02rem;
+  opacity: 0.45;
+}
+
+.bmm-clock-sec {
+  color: color-mix(in oklab, var(--primary) 48%, var(--foreground));
+  min-width: 1.35ch;
+}
+
+/* —— Public IP chip (right of common tools) —— */
+.bmm-ip-card {
+  --bmm-ip-ink: color-mix(in oklab, var(--foreground) 88%, var(--primary));
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.28rem;
+  height: 1.85rem;
+  width: max-content;
+  max-width: none;
+  padding: 0 0.28rem 0 0.28rem;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 22%, var(--border));
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--primary) 10%, var(--glass-muted)) 0%,
+      color-mix(in oklab, var(--glass-muted) 92%, transparent) 55%,
+      var(--glass-muted) 100%
+    );
+  color: var(--muted-foreground);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  transition:
+    border-color 0.18s var(--nav-ease),
+    box-shadow 0.18s var(--nav-ease);
+}
+
+.bmm-ip-card-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: -40% auto -40% -30%;
+  width: 52%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--primary) 28%, transparent),
+    transparent 72%
+  );
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.bmm-ip-card-mark,
+.bmm-ip-card-main,
+.bmm-ip-card-text,
+.bmm-ip-card-action {
+  position: relative;
+  z-index: 1;
+}
+
+.bmm-ip-card-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  color: color-mix(in oklab, var(--primary) 72%, var(--foreground));
+  flex-shrink: 0;
+  cursor: pointer;
+  transition:
+    background 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease),
+    transform 0.14s var(--nav-ease);
+}
+
+.bmm-ip-card-mark:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--foreground);
+  transform: scale(1.06);
+}
+
+.bmm-ip-card-mark:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--primary) 55%, transparent);
+  outline-offset: 1px;
+}
+
+.bmm-ip-card-mark:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.bmm-ip-card.cn .bmm-ip-card-mark {
+  color: color-mix(in oklab, #c45c3a 70%, var(--foreground));
+  background: color-mix(in oklab, #c45c3a 14%, transparent);
+}
+
+.bmm-ip-card.cn .bmm-ip-card-mark:hover:not(:disabled) {
+  background: color-mix(in oklab, #c45c3a 22%, transparent);
+  color: color-mix(in oklab, #c45c3a 85%, var(--foreground));
+}
+
+.bmm-ip-card-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  min-width: 0;
+  height: 100%;
+  padding: 0 0.2rem 0 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 0.35rem;
+}
+
+.bmm-ip-card-main:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--primary) 55%, transparent);
+  outline-offset: 1px;
+}
+
+.bmm-ip-card-main:disabled {
+  cursor: progress;
+}
+
+.bmm-ip-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  gap: 0.02rem;
+  line-height: 1.05;
+}
+
+.bmm-ip-card-label {
+  font-size: 0.55rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--muted-foreground) 82%, var(--primary));
+}
+
+.bmm-ip-card-value {
+  /* IPv4 max: 12 digits + 3 dots (e.g. 255.255.255.255) */
+  width: 15ch;
+  min-width: 15ch;
+  max-width: 15ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  color: var(--bmm-ip-ink);
+}
+
+.bmm-ip-card-value.muted {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.bmm-ip-card-skeleton {
+  letter-spacing: 0.18em;
+  animation: bmm-ip-pulse 1.1s ease-in-out infinite;
+}
+
+.bmm-ip-card-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 0.3rem;
+  color: color-mix(in oklab, var(--muted-foreground) 90%, var(--foreground));
+  flex-shrink: 0;
+  transition:
+    color 0.16s var(--nav-ease),
+    background 0.16s var(--nav-ease);
+}
+
+.bmm-ip-card:hover {
+  border-color: color-mix(in oklab, var(--primary) 42%, var(--border));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.bmm-ip-card-main:hover:not(:disabled) .bmm-ip-card-action {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  color: var(--foreground);
+}
+
+.bmm-ip-card.copied {
+  border-color: color-mix(in oklab, var(--primary) 48%, var(--border));
+}
+
+.bmm-ip-card.copied .bmm-ip-card-action {
+  color: color-mix(in oklab, var(--primary) 75%, var(--foreground));
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+}
+
+.bmm-ip-card-check {
+  animation: bmm-ip-pop 0.28s var(--nav-ease);
+}
+
+.bmm-ip-card.error .bmm-ip-card-mark {
+  background: color-mix(in oklab, #c45c4a 16%, transparent);
+  color: color-mix(in oklab, #c45c4a 80%, var(--foreground));
+}
+
+.bmm-ip-card.refreshing .bmm-ip-card-spin,
+.bmm-ip-card.loading .bmm-ip-card-spin {
+  animation: bmm-ip-spin 0.9s linear infinite;
+}
+
+.bmm-ip-card.error:not(.refreshing) .bmm-ip-card-spin {
+  animation: none;
+}
+
+@keyframes bmm-ip-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes bmm-ip-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bmm-ip-pop {
+  from {
+    transform: scale(0.72);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bmm-ip-card,
+  .bmm-ip-card-mark,
+  .bmm-ip-card-action,
+  .bmm-ip-card-skeleton,
+  .bmm-ip-card-check,
+  .bmm-ip-card.refreshing .bmm-ip-card-spin,
+  .bmm-ip-card.loading .bmm-ip-card-spin {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* —— Common tools trigger (dialog styles live near .bmm-dialog) —— */
+.bmm-tools-menu {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bmm-tools-trigger {
+  gap: 0.28rem;
+  padding-inline: 0.55rem;
+}
+
+.bmm-tools-trigger .bmm-tools-chevron {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-tools-menu.open .bmm-tools-chevron {
+  transform: rotate(180deg);
+}
+
+.bmm-tools-dropdown {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  z-index: 70;
+  min-width: 9.5rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-search {
+  display: flex;
+  width: 12.5rem;
+  align-items: center;
+  gap: 0.35rem;
+  height: 1.85rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0 0.4rem 0 0.65rem;
+  transition: border-color 0.14s var(--nav-ease);
+}
+
+.bmm-search:focus-within {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+  box-shadow: none;
+}
+
+.bmm-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+}
+
+.bmm-search-kbd {
+  flex-shrink: 0;
+  pointer-events: none;
+  font-family: inherit;
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--muted-foreground);
+  border: 1px solid color-mix(in oklab, var(--border) 85%, var(--foreground));
+  border-radius: 0.25rem;
+  padding: 0.15rem 0.3rem;
+  background: color-mix(in oklab, var(--background) 55%, transparent);
+}
+
+.bmm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  height: 2rem;
+  padding: 0 0.7rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.16s var(--nav-ease),
+    color 0.16s var(--nav-ease),
+    border-color 0.16s var(--nav-ease);
+}
+
+.bmm-toolbar .bmm-btn {
+  height: 1.85rem;
+  padding: 0 0.42rem;
+  gap: 0.22rem;
+}
+
+.bmm-btn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+  border-color: var(--border-soft);
+}
+
+.bmm-btn-icon {
+  width: 2rem;
+  padding: 0;
+}
+
+.bmm-toolbar .bmm-btn-icon {
+  width: 1.85rem;
+}
+
+.bmm-toolbar .bmm-btn-theme {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  color: color-mix(in oklab, var(--foreground) 92%, var(--muted-foreground));
+}
+
+.bmm-toolbar .bmm-btn-theme:hover {
+  color: var(--foreground);
+}
+
+.bmm-toolbar .bmm-btn-theme svg {
+  stroke-width: 2.25;
+}
+
+/* —— Appearance (Chrome-like) —— */
+.bmm-appearance {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bmm-appearance-panel {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  z-index: 80;
+  width: 17.5rem;
+  padding: 0.85rem 0.9rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-appearance-title {
+  margin-bottom: 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.bmm-appearance-modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.2rem;
+  padding: 0.18rem;
+  margin-bottom: 0.85rem;
+  border-radius: 999px;
+  background: var(--glass-muted);
+  border: 1px solid var(--border);
+}
+
+.bmm-appearance-mode {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  height: 1.85rem;
+  padding: 0 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.bmm-appearance-mode.active {
+  background: color-mix(in oklab, var(--primary) 16%, var(--glass-overlay));
+  color: var(--foreground);
+  box-shadow: var(--shadow-soft);
+}
+
+.bmm-appearance-check {
+  color: color-mix(in oklab, var(--primary) 80%, var(--foreground));
+}
+
+.bmm-appearance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.45rem;
+}
+
+.bmm-appearance-swatch {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  cursor: pointer;
+  transition:
+    border-color 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease);
+}
+
+.bmm-appearance-swatch:hover {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+}
+
+.bmm-appearance-swatch.active {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.bmm-appearance-circle {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.12);
+}
+
+.bmm-appearance-custom {
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+
+.bmm-appearance-swatch-check {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.bmm-appearance-color-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Bilingual width lock: reserve max(zh,en), then place visible text */
+.bmm-i18n-slot {
+  display: inline-grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.bmm-i18n-slot[data-align='start'] {
+  justify-items: start;
+}
+
+.bmm-i18n-sizer,
+.bmm-i18n-text {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.bmm-i18n-sizer {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bmm-lang {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bmm-lang-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  height: 1.85rem;
+  padding: 0 0.3rem 0 0.42rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition:
+    background 0.16s var(--nav-ease),
+    color 0.16s var(--nav-ease),
+    border-color 0.16s var(--nav-ease);
+}
+
+.bmm-lang-trigger:hover,
+.bmm-lang.open .bmm-lang-trigger {
+  background: var(--muted);
+  color: var(--foreground);
+  border-color: var(--border-soft);
+}
+
+.bmm-lang-chevron {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-lang-current {
+  white-space: nowrap;
+}
+
+.bmm-lang.open .bmm-lang-chevron {
+  transform: rotate(180deg);
+}
+
+.bmm-lang-menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  z-index: 50;
+  min-width: max(100%, 6.5rem);
+  max-height: min(16rem, 50vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.25rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  box-shadow: var(--shadow-float);
+}
+
+/* —— Magic (dedupe / arrange) —— */
+.bmm-magic,
+.bmm-more {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bmm-magic-trigger .bmm-magic-chevron,
+.bmm-more-trigger .bmm-more-chevron {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-magic.open .bmm-magic-chevron,
+.bmm-more.open .bmm-more-chevron {
+  transform: rotate(180deg);
+}
+
+.bmm-magic-menu,
+.bmm-more-menu {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  right: 0;
+  z-index: 70;
+  min-width: 9.5rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-magic-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.4rem 0.55rem;
+  border: none;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s var(--nav-ease);
+}
+
+.bmm-magic-item > svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-magic-item:hover,
+.bmm-magic-flyout.open > .bmm-magic-parent {
+  background: var(--muted);
+}
+
+.bmm-magic-item.danger {
+  color: var(--danger);
+}
+
+.bmm-magic-item.danger > svg {
+  color: var(--danger);
+}
+
+.bmm-magic-item.danger:hover {
+  background: color-mix(in oklab, var(--danger) 10%, transparent);
+  color: var(--danger);
+}
+
+.bmm-magic-parent {
+  align-items: center;
+}
+
+.bmm-magic-sub-chevron {
+  margin-left: auto;
+  margin-top: 0 !important;
+  color: var(--muted-foreground);
+}
+
+.bmm-magic-flyout {
+  position: relative;
+  z-index: 1;
+}
+
+.bmm-magic-submenu {
+  position: absolute;
+  top: -0.25rem;
+  right: calc(100% + 0.2rem);
+  left: auto;
+  z-index: 80;
+  min-width: 13.5rem;
+  max-width: min(18rem, calc(100vw - 1rem));
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-magic-item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.bmm-magic-hint {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+.bmm-lang-menu button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0.4rem 0.55rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.bmm-lang-menu button:hover {
+  background: var(--muted);
+}
+
+.bmm-lang-menu button.selected {
+  color: var(--primary);
+  font-weight: 600;
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+.bmm-btn-primary {
+  border-color: color-mix(in oklab, var(--primary) 28%, transparent);
+  background: color-mix(in oklab, var(--primary) 16%, transparent);
+  color: var(--primary);
+}
+
+.bmm-btn-primary:hover {
+  filter: none;
+  background: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--primary);
+  border-color: color-mix(in oklab, var(--primary) 35%, transparent);
+}
+
+.bmm-btn-danger:hover {
+  background: color-mix(in oklab, var(--danger) 10%, transparent);
+  color: var(--danger);
+  border-color: color-mix(in oklab, var(--danger) 22%, transparent);
+}
+
+.bmm-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.bmm-sidebar-shell {
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
+  min-height: 0;
+}
+
+.bmm-sidebar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem 0.28rem 0.75rem 0.6rem;
+  border-right: 1px solid var(--border);
+  background: var(--glass-muted);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.15);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+/* Sit on the column divider (border), not inside the scroll gutter */
+.bmm-sidebar-resize {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  z-index: 6;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.bmm-sidebar-resize::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  border-radius: 1px;
+  background: transparent;
+  transition: background 0.14s var(--nav-ease);
+}
+
+.bmm-sidebar-resize:hover::after,
+.bmm-sidebar-shell.resizing .bmm-sidebar-resize::after {
+  background: color-mix(in oklab, var(--primary) 45%, transparent);
+}
+
+body.bmm-resizing-sidebar {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+.bmm-sidebar,
+.bmm-grid {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 28%, transparent)
+    transparent;
+}
+
+.bmm-sidebar::-webkit-scrollbar,
+.bmm-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bmm-sidebar::-webkit-scrollbar-track,
+.bmm-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bmm-sidebar::-webkit-scrollbar-thumb,
+.bmm-grid::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+}
+
+.bmm-sidebar::-webkit-scrollbar-thumb:hover,
+.bmm-grid::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--muted-foreground) 55%, transparent);
+}
+
+.bmm-sidebar-section {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 0.35rem 0.5rem;
+}
+
+.bmm-folder-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  width: 100%;
+  min-height: 1.85rem;
+  padding: 0.15rem 0.2rem 0.15rem 0.25rem;
+  border: 0;
+  border-radius: var(--nav-item-radius);
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  text-align: left;
+}
+
+.bmm-folder-row:hover,
+.bmm-folder-row.menu-open {
+  background: var(--muted);
+}
+
+.bmm-folder-row.active {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.bmm-folder-row.drop-target {
+  outline: 2px dashed color-mix(in oklab, var(--primary) 50%, transparent);
+}
+
+.bmm-folder-row.dragging {
+  opacity: 0.4;
+}
+
+.bmm-folder-drop-line {
+  position: absolute;
+  right: 0.45rem;
+  z-index: 40;
+  height: 2px;
+  pointer-events: none;
+  background: var(--primary);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent);
+  transform: translateY(-1px);
+}
+
+.bmm-folder-drop-line::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  transform: translateY(-50%);
+}
+
+.bmm-folder-main {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0.25rem 0.35rem 0.25rem 0.2rem;
+  border: 0;
+  border-radius: var(--nav-item-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bmm-folder-chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+}
+
+.bmm-folder-chevron.spacer {
+  visibility: hidden;
+}
+
+.bmm-folder-icon {
+  flex-shrink: 0;
+}
+
+.bmm-lucide-svg {
+  flex-shrink: 0;
+  display: block;
+}
+
+.bmm-folder-emoji {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  line-height: 1;
+}
+
+.bmm-folder-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 数字 ⇄ 更多：同位置翻转 */
+.bmm-folder-meta {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  min-width: 1.75rem;
+  min-height: 1.35rem;
+  margin-left: 0.15rem;
+  perspective: 240px;
+}
+
+.bmm-folder-count,
+.bmm-folder-more {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.22s var(--nav-ease),
+    opacity 0.18s var(--nav-ease),
+    background 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease);
+}
+
+.bmm-folder-count {
+  padding: 0 0.15rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--muted-foreground);
+  transform: rotateY(0deg);
+  opacity: 1;
+}
+
+.bmm-folder-row.active .bmm-folder-count {
+  color: color-mix(in oklab, var(--primary) 70%, var(--muted-foreground));
+}
+
+.bmm-folder-more {
+  width: 100%;
+  height: 100%;
+  min-width: 1.35rem;
+  min-height: 1.35rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transform: rotateY(90deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bmm-folder-row:has(.bmm-folder-more):hover .bmm-folder-count,
+.bmm-folder-row.menu-open .bmm-folder-count,
+.bmm-folder-row:has(.bmm-folder-more):focus-within .bmm-folder-count {
+  transform: rotateY(-90deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bmm-folder-row:has(.bmm-folder-more):hover .bmm-folder-more,
+.bmm-folder-row.menu-open .bmm-folder-more,
+.bmm-folder-row:has(.bmm-folder-more):focus-within .bmm-folder-more {
+  transform: rotateY(0deg);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bmm-folder-more:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.bmm-folder-menu {
+  position: absolute;
+  top: calc(100% + 0.15rem);
+  right: 0.15rem;
+  z-index: 40;
+  min-width: 7.5rem;
+  padding: 0.25rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-folder-menu button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.5rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.bmm-folder-menu button:hover {
+  background: var(--muted);
+}
+
+.bmm-folder-menu button.danger {
+  color: var(--danger);
+}
+
+.bmm-folder-menu button.danger:hover {
+  background: color-mix(in oklab, var(--danger) 10%, transparent);
+}
+
+.bmm-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmm-main-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.15rem 0.35rem;
+}
+
+.bmm-main-title {
+  font-size: 0.9375rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.bmm-main.home {
+  overflow: hidden;
+}
+
+/* —— Home: pomodoro + desk pet —— */
+.bmm-home {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  padding: 0.75rem;
+}
+
+.bmm-home-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.85rem 0.95rem 0.95rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--border) 85%, var(--foreground));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--primary) 8%, var(--glass-muted)) 0%,
+      var(--glass-muted) 42%,
+      color-mix(in oklab, var(--ambient-2) 55%, var(--glass-muted)) 100%
+    );
+  overflow: hidden;
+}
+
+.bmm-home-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12.5rem, 15.5rem);
+  gap: 0.75rem 0.95rem;
+  align-items: stretch;
+  flex: 0 0 auto;
+}
+
+.bmm-home-todos {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.bmm-home-side {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.bmm-home-pomo {
+  width: 100%;
+}
+
+.bmm-home-bottom {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.bmm-pet.bmm-home-pet {
+  position: absolute;
+  right: 0;
+  bottom: 0.35rem;
+  z-index: 8;
+  margin: 0;
+  padding: 0.1rem 0.15rem 1.5rem;
+}
+
+.bmm-home-gantt.bmm-gantt,
+.bmm-home-gantt {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* —— Todos —— */
+.bmm-todos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 0;
+  padding: 0.7rem 0.75rem 0.8rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--card-solid) 72%, transparent);
+  overflow: auto;
+}
+
+.bmm-todos-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.bmm-todos-title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.bmm-todos-add {
+  height: 1.7rem;
+  padding-inline: 0.55rem;
+  font-size: 0.72rem;
+  gap: 0.25rem;
+}
+
+.bmm-todos-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bmm-todo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.4rem;
+  border-radius: 0.55rem;
+  border: 1px solid transparent;
+  background: color-mix(in oklab, var(--background) 35%, transparent);
+}
+
+.bmm-todo-row > :not(.bmm-todo-title) {
+  flex-shrink: 0;
+}
+
+.bmm-todo-row.linked {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+}
+
+.bmm-todo-row.st-overdue {
+  border-color: color-mix(in oklab, #c45c3a 35%, var(--border));
+}
+
+.bmm-todo-row.done {
+  opacity: 0.72;
+}
+
+.bmm-todo-check {
+  width: 1.15rem;
+  height: 1.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--foreground);
+}
+
+.bmm-todo-check-box {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 0.22rem;
+  border: 1.5px solid color-mix(in oklab, var(--border) 70%, var(--foreground));
+}
+
+.bmm-todo-check.checked {
+  color: color-mix(in oklab, var(--primary) 70%, var(--foreground));
+}
+
+.bmm-todo-swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, #000 18%, transparent);
+  padding: 0;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.bmm-todo-swatch.static {
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 0;
+  pointer-events: none;
+}
+
+.bmm-todo-title {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  height: 1.55rem;
+  padding: 0 0.45rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-size: 0.78rem;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  caret-color: var(--foreground);
+  transition:
+    border-color 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease);
+}
+
+.bmm-todo-title::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.72;
+}
+
+.bmm-todo-title:hover {
+  border-color: color-mix(in oklab, var(--foreground) 14%, var(--border));
+}
+
+.bmm-todo-title:focus {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+  background: color-mix(in oklab, var(--background) 72%, var(--glass-muted));
+  box-shadow: none;
+}
+
+.bmm-todo-title.muted {
+  border: 0;
+  background: transparent;
+  padding-inline: 0.2rem;
+  text-decoration: line-through;
+  color: var(--muted-foreground);
+}
+
+.bmm-todo-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.12rem;
+}
+
+.bmm-todo-step {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.3rem;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.bmm-todo-step:hover,
+.bmm-todo-step:active {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.bmm-dur-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05rem;
+  height: 1.35rem;
+  min-width: 3.15rem;
+  padding: 0 0.15rem 0 0.3rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-size: 0.68rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.bmm-dur-btn:hover,
+.bmm-dur-btn.open {
+  border-color: color-mix(in oklab, var(--foreground) 18%, var(--border));
+  background: var(--muted);
+}
+
+.bmm-dur-btn svg {
+  color: var(--muted-foreground);
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-dur-btn.open svg {
+  transform: rotate(180deg);
+}
+
+.bmm-dur-menu {
+  position: fixed;
+  z-index: 80;
+  visibility: hidden;
+  width: 4.8rem;
+  max-height: 11rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+  scrollbar-width: thin;
+}
+
+.bmm-dur-menu.placed {
+  visibility: visible;
+}
+
+.bmm-dur-opt {
+  display: block;
+  width: 100%;
+  padding: 0.28rem 0.3rem;
+  border: 0;
+  border-radius: 0.32rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.12s var(--nav-ease);
+}
+
+.bmm-dur-opt:hover {
+  background: var(--muted);
+}
+
+.bmm-dur-opt.selected {
+  background: color-mix(in oklab, #c47a3a 78%, var(--primary));
+  color: #fff;
+}
+
+.bmm-todo-duration-val {
+  min-width: 2.4rem;
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.bmm-todo-duration-val.muted {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+/* —— Datetime picker —— */
+.bmm-dtp {
+  position: relative;
+  z-index: 6;
+}
+
+.bmm-dtp.open {
+  z-index: 40;
+}
+
+.bmm-dtp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  height: 1.55rem;
+  max-width: 11.5rem;
+  padding: 0 0.45rem;
+  border-radius: 0.4rem;
+  border: 1px solid color-mix(in oklab, var(--border) 75%, transparent);
+  background: color-mix(in oklab, var(--background) 55%, transparent);
+  color: var(--foreground);
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.bmm-dtp-trigger:hover {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+}
+
+.bmm-dtp-pop {
+  position: fixed;
+  z-index: 80;
+  visibility: hidden;
+  width: max-content;
+  max-width: min(23.5rem, 92vw);
+  padding: 0.65rem 0.7rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, var(--foreground));
+  background: color-mix(in oklab, var(--card-solid) 92%, var(--glass-strong));
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+.bmm-dtp-pop.placed {
+  visibility: visible;
+}
+
+.bmm-dtp-body {
+  display: flex;
+  align-items: stretch;
+  gap: 0.7rem;
+}
+
+.bmm-dtp-cal {
+  width: 15.4rem;
+  flex: 0 0 auto;
+}
+
+.bmm-dtp-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.bmm-dtp-month {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.bmm-dtp-nav {
+  width: 1.55rem;
+  height: 1.55rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.bmm-dtp-nav:hover {
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--foreground);
+}
+
+.bmm-dtp-dows {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.bmm-dtp-dows span {
+  text-align: center;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+}
+
+.bmm-dtp-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.12rem;
+}
+
+.bmm-dtp-day {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.bmm-dtp-day:hover {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+.bmm-dtp-day.muted {
+  color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
+}
+
+.bmm-dtp-day.today {
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, #c47a3a 65%, var(--primary));
+}
+
+.bmm-dtp-day.selected {
+  background: color-mix(in oklab, #c47a3a 78%, var(--primary));
+  color: #fff;
+}
+
+.bmm-dtp-time {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 4.6rem;
+  flex: 0 0 auto;
+  padding-left: 0.65rem;
+  border-left: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+.bmm-dtp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+}
+
+.bmm-dtp-field-label {
+  font-size: 0.62rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+}
+
+.bmm-dtp-dd {
+  position: relative;
+}
+
+.bmm-dtp-dd-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 1.7rem;
+  padding: 0 0.3rem 0 0.4rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    border-color 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease);
+}
+
+.bmm-dtp-dd.open .bmm-dtp-dd-btn,
+.bmm-dtp-dd-btn:hover {
+  border-color: color-mix(in oklab, var(--foreground) 18%, var(--border));
+  background: var(--muted);
+}
+
+.bmm-dtp-dd-btn svg {
+  color: var(--muted-foreground);
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-dtp-dd.open .bmm-dtp-dd-btn svg {
+  transform: rotate(180deg);
+}
+
+.bmm-dtp-dd-menu {
+  position: absolute;
+  top: calc(100% + 0.22rem);
+  left: 0;
+  right: 0;
+  z-index: 3;
+  max-height: 9.5rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+  scrollbar-width: thin;
+}
+
+.bmm-dtp-dd-opt {
+  display: block;
+  width: 100%;
+  padding: 0.28rem 0.35rem;
+  border: 0;
+  border-radius: 0.32rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.12s var(--nav-ease);
+}
+
+.bmm-dtp-dd-opt:hover {
+  background: var(--muted);
+}
+
+.bmm-dtp-dd-opt.selected {
+  background: color-mix(in oklab, #c47a3a 78%, var(--primary));
+  color: #fff;
+}
+
+.bmm-dtp-today {
+  height: 1.7rem;
+  margin-top: auto;
+  font-size: 0.68rem;
+  padding-inline: 0.25rem;
+}
+
+.bmm-todo-badge {
+  font-size: 0.62rem;
+  font-weight: 650;
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+  background: color-mix(in oklab, var(--border) 35%, transparent);
+}
+
+.bmm-todo-badge[data-st='active'] {
+  color: color-mix(in oklab, #5b8c5a 80%, var(--foreground));
+  background: color-mix(in oklab, #5b8c5a 16%, transparent);
+}
+
+.bmm-todo-badge[data-st='overdue'] {
+  color: color-mix(in oklab, #c45c3a 85%, var(--foreground));
+  background: color-mix(in oklab, #c45c3a 16%, transparent);
+}
+
+.bmm-todo-pomo {
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.bmm-todo-pomo.on {
+  background: color-mix(in oklab, var(--primary) 18%, transparent);
+  color: color-mix(in oklab, var(--primary) 75%, var(--foreground));
+}
+
+.bmm-todos-empty {
+  margin: 0.35rem 0 0.15rem;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-todos-done-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.2rem 0.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bmm-todos-done-toggle svg {
+  transition: transform 0.18s var(--nav-ease);
+}
+
+.bmm-todos-done-toggle svg.open {
+  transform: rotate(180deg);
+}
+
+/* —— Gantt —— */
+.bmm-gantt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  padding: 0.55rem 0.6rem 0.6rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  background: color-mix(in oklab, var(--card-solid) 72%, transparent);
+}
+
+.bmm-gantt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.bmm-gantt-title {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.bmm-gantt-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.bmm-gantt-export {
+  height: 1.55rem;
+  padding: 0 0.45rem;
+  font-size: 0.68rem;
+  border-color: color-mix(in oklab, var(--border) 80%, transparent);
+  background: var(--glass-muted);
+  color: var(--foreground);
+}
+
+.bmm-gantt-warn {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid color-mix(in oklab, #c47a3a 42%, var(--border));
+  background: color-mix(in oklab, #c47a3a 12%, transparent);
+  color: var(--foreground);
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.bmm-gantt-warn p {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.bmm-gantt-warn .bmm-btn {
+  height: 1.5rem;
+  padding: 0 0.45rem;
+  font-size: 0.66rem;
+  flex-shrink: 0;
+}
+
+.bmm-gantt-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.bmm-gantt-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  background: color-mix(in oklab, var(--background) 40%, transparent);
+  overflow: hidden;
+}
+
+.bmm-gantt-labels {
+  flex: 0 0 8.75rem;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 100%;
+  height: auto;
+  border-right: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  background: color-mix(in oklab, var(--card-solid) 88%, transparent);
+  z-index: 3;
+}
+
+.bmm-gantt-label-head {
+  flex-shrink: 0;
+  height: calc(1.15rem + 1.55rem);
+  z-index: 2;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  background: color-mix(in oklab, var(--card-solid) 92%, transparent);
+}
+
+.bmm-gantt-label-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.bmm-gantt-label-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.45rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 35%, transparent);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.bmm-gantt-label-row.done {
+  opacity: 0.5;
+}
+
+.bmm-gantt-label-dot {
+  flex: 0 0 0.45rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+}
+
+.bmm-gantt-label-text {
+  min-width: 0;
+  font-size: 0.68rem;
+  font-weight: 650;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bmm-gantt-label-empty {
+  flex: 1;
+  margin: 0;
+  padding: 0.75rem 0.55rem;
+  font-size: 0.68rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-gantt-scroll {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.bmm-gantt-track {
+  position: relative;
+  flex: 1 0 auto;
+  min-height: 100%;
+  width: max-content;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.bmm-gantt-months {
+  position: relative;
+  flex-shrink: 0;
+  height: 1.15rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+}
+
+.bmm-gantt-month {
+  position: absolute;
+  top: 0;
+  height: 1.15rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  border-left: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bmm-gantt-days {
+  display: flex;
+  flex-shrink: 0;
+  height: 1.55rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  background: color-mix(in oklab, var(--card-solid) 88%, transparent);
+}
+
+.bmm-gantt-day {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid color-mix(in oklab, var(--border) 40%, transparent);
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.62rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.bmm-gantt-day:hover {
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  color: var(--foreground);
+}
+
+.bmm-gantt-day.weekend {
+  background: color-mix(in oklab, var(--foreground) 3%, transparent);
+}
+
+.bmm-gantt-day.today {
+  color: color-mix(in oklab, var(--primary) 70%, var(--foreground));
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  font-weight: 800;
+}
+
+.bmm-gantt-day.expanded {
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.bmm-gantt-day-num {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.bmm-gantt-hour-tick {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-right: 1px solid color-mix(in oklab, var(--border) 35%, transparent);
+  font-size: 0.55rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.bmm-gantt-lanes {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 4rem;
+}
+
+.bmm-gantt-lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 28%, transparent);
+}
+
+.bmm-gantt-today-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: color-mix(in oklab, #c45c3a 75%, var(--primary));
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bmm-gantt-bar {
+  position: absolute;
+  top: 0.35rem;
+  height: calc(100% - 0.7rem);
+  border-radius: 0.3rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in oklab, #000 12%, transparent);
+  z-index: 1;
+}
+
+.bmm-gantt-bar.done {
+  opacity: 0.4;
+}
+
+.bmm-gantt-bar-progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: color-mix(in oklab, #000 22%, transparent);
+  pointer-events: none;
+}
+
+.bmm-pomo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem 1.05rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card-solid) 72%, var(--glass-overlay));
+  box-shadow: var(--shadow-soft);
+}
+
+.bmm-pomo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.bmm-pomo-title {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 650;
+}
+
+.bmm-pomo-sound {
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bmm-pomo-sound.on {
+  border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
+  color: color-mix(in oklab, var(--primary) 70%, var(--foreground));
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.bmm-pomo-phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 0.55rem;
+  background: var(--glass-muted);
+  border: 1px solid var(--border-soft);
+}
+
+.bmm-pomo-phase {
+  height: 1.7rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bmm-pomo-phase.active {
+  background: color-mix(in oklab, var(--primary) 14%, var(--background));
+  color: var(--foreground);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 22%, transparent);
+}
+
+.bmm-pomo-ring-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 0.35rem 0 0.15rem;
+}
+
+.bmm-pomo-ring {
+  width: 11.5rem;
+  height: 11.5rem;
+  border-radius: 999px;
+  padding: 0.55rem;
+  display: grid;
+  place-items: center;
+}
+
+.bmm-pomo-ring-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  background: color-mix(in oklab, var(--card-solid) 88%, var(--background));
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+}
+
+.bmm-pomo-phase-label {
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bmm-pomo-clock {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 2.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--foreground);
+}
+
+.bmm-pomo-meta {
+  font-size: 0.7rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-pomo-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.bmm-pomo-primary {
+  flex: 1;
+  height: 2.15rem;
+}
+
+.bmm-pet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 11.5rem;
+  padding: 0.4rem 0.5rem 0.55rem;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bmm-pet-svg {
+  width: 10.5rem;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 10px 18px color-mix(in oklab, var(--primary) 18%, transparent));
+  transform-origin: 50% 85%;
+  transition: transform 0.22s var(--nav-ease);
+}
+
+.bmm-pet:hover .bmm-pet-svg {
+  transform: translateY(-2px);
+}
+
+.bmm-pet:active .bmm-pet-svg {
+  transform: translateY(1px) scale(0.98);
+}
+
+.bmm-pet.mood-happy .bmm-pet-svg {
+  animation: bmm-pet-bounce 0.55s var(--nav-ease);
+}
+
+.bmm-pet.mood-focus .bmm-pet-body {
+  fill: color-mix(in oklab, var(--primary) 42%, var(--card-solid));
+}
+
+.bmm-pet.mood-rest .bmm-pet-body {
+  fill: color-mix(in oklab, var(--primary) 22%, var(--card-solid));
+}
+
+.bmm-pet.mood-sleep .bmm-pet-svg,
+.bmm-pet.mood-sleepy .bmm-pet-svg {
+  animation: bmm-pet-breathe 3.2s ease-in-out infinite;
+}
+
+.bmm-pet-body {
+  fill: color-mix(in oklab, var(--primary) 28%, var(--card-solid));
+  stroke: color-mix(in oklab, var(--primary) 35%, var(--border));
+  stroke-width: 1.5;
+}
+
+.bmm-pet-stripe {
+  fill: color-mix(in oklab, var(--primary) 55%, var(--card-solid));
+  stroke: color-mix(in oklab, var(--primary) 40%, var(--border));
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+
+.bmm-pet-ear-wrap {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.bmm-pet-ear-l {
+  transform-origin: 40px 42px;
+}
+
+.bmm-pet-ear-r {
+  transform-origin: 80px 42px;
+}
+
+.bmm-pet-ear {
+  fill: color-mix(in oklab, var(--primary) 45%, var(--card-solid));
+  stroke: color-mix(in oklab, var(--primary) 30%, var(--border));
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.bmm-pet-ear-inner {
+  fill: color-mix(in oklab, #f2a4b0 42%, var(--card-solid));
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* idle — soft asymmetric twitch, like a curious little animal */
+.bmm-pet.mood-idle .bmm-pet-ear-l {
+  animation: bmm-ear-idle-l 4.8s var(--nav-ease) infinite;
+}
+
+.bmm-pet.mood-idle .bmm-pet-ear-r {
+  animation: bmm-ear-idle-r 4.8s var(--nav-ease) infinite;
+  animation-delay: 0.35s;
+}
+
+/* focus — perked up, tiny alert flicks */
+.bmm-pet.mood-focus .bmm-pet-ear-l {
+  animation: bmm-ear-focus-l 2.6s var(--nav-ease) infinite;
+}
+
+.bmm-pet.mood-focus .bmm-pet-ear-r {
+  animation: bmm-ear-focus-r 2.6s var(--nav-ease) infinite;
+  animation-delay: 0.12s;
+}
+
+/* rest — relaxed outward sway */
+.bmm-pet.mood-rest .bmm-pet-ear-l {
+  animation: bmm-ear-rest-l 3.4s ease-in-out infinite;
+}
+
+.bmm-pet.mood-rest .bmm-pet-ear-r {
+  animation: bmm-ear-rest-r 3.4s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+/* happy — playful double wiggle while celebrating */
+.bmm-pet.mood-happy .bmm-pet-ear-l {
+  animation: bmm-ear-happy-l 0.7s var(--nav-ease) infinite;
+}
+
+.bmm-pet.mood-happy .bmm-pet-ear-r {
+  animation: bmm-ear-happy-r 0.7s var(--nav-ease) infinite;
+}
+
+/* sleepy — slowly drooping */
+.bmm-pet.mood-sleepy .bmm-pet-ear-l {
+  animation: bmm-ear-sleepy-l 2.8s ease-in-out infinite;
+}
+
+.bmm-pet.mood-sleepy .bmm-pet-ear-r {
+  animation: bmm-ear-sleepy-r 2.8s ease-in-out infinite;
+  animation-delay: 0.18s;
+}
+
+/* sleep — flopped + tiny breath */
+.bmm-pet.mood-sleep .bmm-pet-ear-l {
+  animation: bmm-ear-sleep-l 3.2s ease-in-out infinite;
+}
+
+.bmm-pet.mood-sleep .bmm-pet-ear-r {
+  animation: bmm-ear-sleep-r 3.2s ease-in-out infinite;
+}
+
+/* hover curiosity perk (when not sleeping) */
+.bmm-pet:hover:not(.mood-sleep):not(.mood-sleepy) .bmm-pet-ear-l {
+  animation: none;
+  transform: rotate(-14deg) translateY(-1px);
+  transition: transform 0.28s var(--nav-ease);
+}
+
+.bmm-pet:hover:not(.mood-sleep):not(.mood-sleepy) .bmm-pet-ear-r {
+  animation: none;
+  transform: rotate(14deg) translateY(-1px);
+  transition: transform 0.28s var(--nav-ease);
+}
+
+.bmm-pet:active:not(.mood-sleep) .bmm-pet-ear-l {
+  animation: none;
+  transform: rotate(10deg);
+  transition: transform 0.12s var(--nav-ease);
+}
+
+.bmm-pet:active:not(.mood-sleep) .bmm-pet-ear-r {
+  animation: none;
+  transform: rotate(-10deg);
+  transition: transform 0.12s var(--nav-ease);
+}
+
+@keyframes bmm-ear-idle-l {
+  0%,
+  78%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  84% {
+    transform: rotate(-14deg);
+  }
+  90% {
+    transform: rotate(6deg);
+  }
+  94% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes bmm-ear-idle-r {
+  0%,
+  80%,
+  100% {
+    transform: rotate(2deg);
+  }
+  86% {
+    transform: rotate(12deg);
+  }
+  91% {
+    transform: rotate(-4deg);
+  }
+  95% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes bmm-ear-focus-l {
+  0%,
+  100% {
+    transform: rotate(-16deg) translateY(-1.5px);
+  }
+  18% {
+    transform: rotate(-22deg) translateY(-2px);
+  }
+  32% {
+    transform: rotate(-12deg) translateY(-1px);
+  }
+  70% {
+    transform: rotate(-16deg) translateY(-1.5px);
+  }
+}
+
+@keyframes bmm-ear-focus-r {
+  0%,
+  100% {
+    transform: rotate(16deg) translateY(-1.5px);
+  }
+  22% {
+    transform: rotate(22deg) translateY(-2px);
+  }
+  36% {
+    transform: rotate(12deg) translateY(-1px);
+  }
+  70% {
+    transform: rotate(16deg) translateY(-1.5px);
+  }
+}
+
+@keyframes bmm-ear-rest-l {
+  0%,
+  100% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes bmm-ear-rest-r {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(-14deg);
+  }
+}
+
+@keyframes bmm-ear-happy-l {
+  0% {
+    transform: rotate(-4deg);
+  }
+  25% {
+    transform: rotate(-22deg) translateY(-2px);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: rotate(-18deg) translateY(-1px);
+  }
+  100% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes bmm-ear-happy-r {
+  0% {
+    transform: rotate(4deg);
+  }
+  25% {
+    transform: rotate(22deg) translateY(-2px);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(18deg) translateY(-1px);
+  }
+  100% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes bmm-ear-sleepy-l {
+  0%,
+  100% {
+    transform: rotate(18deg) translateY(1px);
+  }
+  50% {
+    transform: rotate(24deg) translateY(2px);
+  }
+}
+
+@keyframes bmm-ear-sleepy-r {
+  0%,
+  100% {
+    transform: rotate(-18deg) translateY(1px);
+  }
+  50% {
+    transform: rotate(-24deg) translateY(2px);
+  }
+}
+
+@keyframes bmm-ear-sleep-l {
+  0%,
+  100% {
+    transform: rotate(32deg) translate(1px, 3px);
+  }
+  50% {
+    transform: rotate(34deg) translate(1px, 4px);
+  }
+}
+
+@keyframes bmm-ear-sleep-r {
+  0%,
+  100% {
+    transform: rotate(-32deg) translate(-1px, 3px);
+  }
+  50% {
+    transform: rotate(-34deg) translate(-1px, 4px);
+  }
+}
+
+
+.bmm-pet-cheek {
+  fill: color-mix(in oklab, #e8899a 55%, transparent);
+  opacity: 0.55;
+}
+
+.bmm-pet-eye {
+  fill: var(--foreground);
+}
+
+.bmm-pet-shine {
+  fill: var(--background);
+}
+
+.bmm-pet-lid {
+  fill: none;
+  stroke: var(--foreground);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.bmm-pet-mouth {
+  fill: none;
+  stroke: var(--foreground);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.bmm-pet-glow {
+  fill: color-mix(in oklab, var(--primary) 22%, transparent);
+}
+
+.bmm-pet-zzz text {
+  fill: color-mix(in oklab, var(--primary) 55%, var(--muted-foreground));
+  font-size: 10px;
+  font-weight: 700;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.bmm-pet-zzz .z2 {
+  font-size: 12px;
+  opacity: 0.75;
+  animation: bmm-pet-zzz 1.8s ease-in-out infinite;
+}
+
+.bmm-pet-caption {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+@keyframes bmm-pet-bounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-10px) scale(1.04);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bmm-pet-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes bmm-pet-zzz {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 820px) {
+  .bmm-home-top {
+    grid-template-columns: 1fr;
+  }
+
+  .bmm-home-bottom {
+    flex: 1 1 auto;
+  }
+
+  .bmm-home-side {
+    max-height: 14rem;
+  }
+
+  .bmm-home-pet {
+    width: 9rem;
+    right: 0;
+    bottom: 0.15rem;
+  }
+
+  .bmm-home-pet .bmm-pet-svg {
+    width: 8.25rem;
+  }
+
+  .bmm-gantt-labels {
+    flex-basis: 6.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bmm-pet.mood-happy .bmm-pet-svg,
+  .bmm-pet.mood-sleep .bmm-pet-svg,
+  .bmm-pet.mood-sleepy .bmm-pet-svg,
+  .bmm-pet-zzz .z2,
+  .bmm-pet-ear-l,
+  .bmm-pet-ear-r {
+    animation: none;
+  }
+
+  .bmm-pet:hover .bmm-pet-svg,
+  .bmm-pet:active .bmm-pet-svg,
+  .bmm-pet:hover:not(.mood-sleep):not(.mood-sleepy) .bmm-pet-ear-l,
+  .bmm-pet:hover:not(.mood-sleep):not(.mood-sleepy) .bmm-pet-ear-r,
+  .bmm-pet:active:not(.mood-sleep) .bmm-pet-ear-l,
+  .bmm-pet:active:not(.mood-sleep) .bmm-pet-ear-r {
+    transform: none;
+  }
+}
+
+/* —— Sort select (next to batch) —— */
+.bmm-sort {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.bmm-sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 1.75rem;
+  padding: 0 0.45rem 0 0.6rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition:
+    border-color 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease);
+}
+
+.bmm-sort-trigger:hover,
+.bmm-sort.open .bmm-sort-trigger {
+  border-color: color-mix(in oklab, var(--foreground) 18%, var(--border));
+  background: var(--muted);
+}
+
+.bmm-sort-trigger-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.bmm-sort-chevron {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-sort.open .bmm-sort-chevron {
+  transform: rotate(180deg);
+}
+
+.bmm-sort-dir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    border-color 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease);
+}
+
+.bmm-sort-dir:hover {
+  border-color: color-mix(in oklab, var(--foreground) 18%, var(--border));
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.bmm-sort-dir.desc {
+  color: var(--foreground);
+}
+
+.bmm-sort-dir.desc svg {
+  transform: scaleY(-1);
+}
+
+.bmm-sort-menu {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  z-index: 60;
+  min-width: 11rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-sort-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  border: none;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s var(--nav-ease);
+}
+
+.bmm-sort-option:hover {
+  background: var(--muted);
+}
+
+.bmm-sort-option.selected {
+  background: color-mix(in oklab, var(--primary) 8%, var(--muted));
+}
+
+.bmm-sort-option-icon {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+
+.bmm-sort-option.selected .bmm-sort-option-icon {
+  color: var(--foreground);
+}
+
+.bmm-sort-option-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.bmm-sort-check {
+  flex-shrink: 0;
+  color: var(--foreground);
+}
+
+.bmm-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.35rem 1.15rem 0.75rem;
+}
+
+.bmm-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 1.75rem;
+  padding: 0 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bmm-tab.active {
+  background: color-mix(in oklab, var(--primary) 14%, var(--glass-strong));
+  color: var(--primary);
+  border-color: color-mix(in oklab, var(--primary) 28%, var(--border));
+  font-weight: 600;
+}
+
+.bmm-tab-count {
+  opacity: 0.65;
+  font-size: 0.6875rem;
+}
+
+.bmm-grid {
+  position: relative;
+  flex: 1;
+  overflow: auto;
+  padding: 0.25rem 1.15rem 1.5rem;
+}
+
+.bmm-grid.compact {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.bmm-grid.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bmm-grid.expanded {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  align-content: start;
+  align-items: start;
+}
+
+/* —— Arrange mode (grouped by domain / name) —— */
+.bmm-arrange {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: auto;
+  padding: 0 1.15rem 1.5rem;
+}
+
+.bmm-arrange-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.bmm-arrange-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0 0.15rem;
+}
+
+.bmm-arrange-tag {
+  flex-shrink: 0;
+  padding: 0.12rem 0.4rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--border-soft);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.bmm-arrange-label {
+  margin: 0;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.bmm-arrange-label.residual {
+  font-weight: 550;
+  color: var(--muted-foreground);
+}
+
+.bmm-arrange-count {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.bmm-arrange .bmm-grid {
+  flex: none;
+  overflow: visible;
+  padding: 0;
+}
+
+.bmm-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--nav-card-radius);
+  border: 1px solid var(--border);
+  /* Solid fill — per-card backdrop-filter blanks tiles while scrolling many cards */
+  background: var(--card-solid);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 3.25rem;
+  transition:
+    border-color 0.16s var(--nav-ease),
+    background 0.16s var(--nav-ease),
+    box-shadow 0.16s var(--nav-ease);
+}
+
+.bmm-card.batch {
+  padding-left: 1.85rem;
+}
+
+.bmm-card:hover {
+  border-color: color-mix(in oklab, var(--foreground) 12%, var(--border));
+  background: color-mix(in oklab, var(--foreground) 4%, var(--card-solid));
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-card.selected {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 10%, var(--card-solid));
+}
+
+.bmm-card.dragging {
+  opacity: 0.45;
+}
+
+.bmm-card-drop-line {
+  position: absolute;
+  z-index: 40;
+  pointer-events: none;
+  background: var(--primary);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent);
+}
+
+.bmm-card-drop-line.h {
+  height: 2px;
+  transform: translateY(-1px);
+}
+
+.bmm-card-drop-line.h::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  transform: translateY(-50%);
+}
+
+.bmm-card-drop-line.v {
+  width: 2px;
+  transform: translateX(-1px);
+}
+
+.bmm-card-drop-line.v::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  transform: translateX(-50%);
+}
+
+/* Wanted-poster style dead stamp — overlay only, no layout impact */
+.bmm-dead-stamp {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      120% 80% at 50% 45%,
+      color-mix(in oklab, var(--danger) 10%, transparent),
+      transparent 70%
+    );
+}
+
+.bmm-dead-stamp-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
+  border: 1.5px solid color-mix(in oklab, var(--danger) 55%, transparent);
+  border-radius: 2px;
+  background: transparent;
+  box-shadow:
+    0 0 0 3px color-mix(in oklab, var(--danger) 18%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--danger) 25%, transparent);
+}
+
+.bmm-dead-stamp-text {
+  display: block;
+  padding: 0.28rem 0.7rem;
+  border: 2px solid color-mix(in oklab, var(--danger) 88%, var(--foreground) 12%);
+  border-radius: 1px;
+  color: color-mix(in oklab, var(--danger) 82%, var(--foreground) 18%);
+  background: color-mix(in oklab, var(--danger) 14%, transparent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  line-height: 1.2;
+  text-indent: 0.28em;
+  white-space: nowrap;
+  text-shadow: 0 1px 0 color-mix(in oklab, var(--background) 35%, transparent);
+  opacity: 0.92;
+}
+
+.bmm-card.compact .bmm-dead-stamp-text,
+.bmm-card.list .bmm-dead-stamp-text {
+  font-size: 0.68rem;
+  padding: 0.18rem 0.5rem;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+}
+
+.bmm-card.expanded .bmm-dead-stamp-text {
+  font-size: 0.92rem;
+  padding: 0.4rem 0.95rem;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+}
+
+[data-theme='light'] .bmm-dead-stamp-text {
+  color: color-mix(in oklab, var(--danger) 92%, black 8%);
+  border-color: color-mix(in oklab, var(--danger) 85%, black 15%);
+  background: color-mix(in oklab, var(--danger) 10%, white 8%);
+  mix-blend-mode: multiply;
+}
+
+[data-theme='dark'] .bmm-dead-stamp-text {
+  color: color-mix(in oklab, var(--danger) 75%, white 25%);
+  border-color: color-mix(in oklab, var(--danger) 70%, white 20%);
+  background: color-mix(in oklab, var(--danger) 16%, transparent);
+  mix-blend-mode: screen;
+  text-shadow: none;
+  opacity: 0.88;
+}
+
+/* 详情卡：高度随内容，操作区紧跟内容下方 */
+.bmm-card.expanded {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  gap: 0;
+  overflow: visible;
+  box-sizing: border-box;
+  contain-intrinsic-size: auto 12rem;
+}
+
+.bmm-card.expanded.batch {
+  padding-left: 0;
+}
+
+.bmm-card.expanded.batch .bmm-card-action-zone {
+  padding-left: 1.85rem;
+}
+
+/* 左上角热区：悬停显示，圆角内嵌不贴卡片边 */
+.bmm-card-grip {
+  position: absolute;
+  left: 0.35rem;
+  top: 0.35rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: calc(var(--nav-card-radius) - 4px);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: grab;
+  opacity: 0;
+  pointer-events: auto;
+  transition:
+    opacity 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease),
+    border-color 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease);
+}
+
+.bmm-card-grip:hover,
+.bmm-card-grip:focus-visible {
+  opacity: 1;
+  border-color: color-mix(in oklab, var(--border) 85%, transparent);
+  background: color-mix(in oklab, var(--card) 92%, var(--muted));
+  color: var(--foreground);
+  box-shadow: none;
+}
+
+.bmm-card-grip:active {
+  cursor: grabbing;
+}
+
+/* 批量勾选：左下角，与拖拽手柄错开 */
+.bmm-card-check {
+  position: absolute;
+  left: 0.4rem;
+  bottom: 0.4rem;
+  top: auto;
+  transform: none;
+  z-index: 3;
+  display: inline-flex;
+  margin: 0;
+  cursor: pointer;
+}
+
+.bmm-card.expanded .bmm-card-check {
+  left: 0.55rem;
+  bottom: 0.95rem;
+}
+
+.bmm-card-check input {
+  width: 0.85rem;
+  height: 0.85rem;
+  margin: 0;
+  accent-color: var(--primary);
+}
+
+.bmm-favicon,
+.bmm-favicon-fallback {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.35rem;
+  flex-shrink: 0;
+}
+
+.bmm-card.expanded .bmm-favicon,
+.bmm-card.expanded .bmm-favicon-fallback {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.bmm-favicon {
+  object-fit: contain;
+  background: var(--muted);
+}
+
+.bmm-favicon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in oklab, var(--primary) 14%, var(--muted));
+  color: var(--primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.bmm-card-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.bmm-card-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bmm-card-url {
+  margin-top: 0.1rem;
+  font-size: 0.625rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 详情大卡片：上内容 / 下操作（纯堆叠，不玩高度百分比） ---------- */
+
+.bmm-card-expanded {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.bmm-card-body-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: none;
+  min-width: 0;
+  padding: 0.85rem 0.9rem 0.65rem;
+}
+
+.bmm-card-action-zone {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.6rem 0.9rem 0.75rem;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 calc(var(--nav-card-radius) - 1px) calc(var(--nav-card-radius) - 1px);
+  background: var(--glass-muted);
+}
+
+.bmm-card-expanded-top {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.bmm-card-expanded-top .bmm-card-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.bmm-card-expanded-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.bmm-card-url-link {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-size: 0.78rem;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bmm-card-url-link:hover {
+  text-decoration: underline;
+}
+
+.bmm-card-field {
+  display: flex;
+  margin: 0;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.bmm-card-field-label {
+  flex-shrink: 0;
+  color: color-mix(in oklab, var(--muted-foreground) 88%, var(--foreground));
+  font-weight: 550;
+}
+
+.bmm-card-field-value {
+  min-width: 0;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.bmm-card-field.empty .bmm-card-field-value,
+.bmm-card-field-value.empty {
+  opacity: 0.65;
+  font-style: italic;
+}
+
+.bmm-card-chip {
+  display: inline-flex;
+  height: 2rem;
+  min-height: 2rem;
+  min-width: 0;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition:
+    color 0.14s var(--nav-ease),
+    background 0.14s var(--nav-ease),
+    border-color 0.14s var(--nav-ease);
+}
+
+.bmm-card-chip:hover {
+  border-color: color-mix(in oklab, var(--foreground) 12%, var(--border));
+  background: var(--glass-strong);
+  color: var(--foreground);
+}
+
+.bmm-card-chip.active {
+  color: var(--favorite);
+  border-color: color-mix(in oklab, var(--favorite) 30%, var(--border));
+  background: color-mix(in oklab, var(--favorite) 10%, var(--glass));
+}
+
+.bmm-card-chip.danger:hover {
+  color: var(--danger);
+  border-color: color-mix(in oklab, var(--danger) 35%, var(--border));
+  background: color-mix(in oklab, var(--danger) 8%, var(--card));
+}
+
+/* 右上角浮层：紧凑/列表用 */
+.bmm-card-actions {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.05rem;
+  padding: 0.1rem;
+  border-radius: 0.4rem;
+  background: var(--glass-overlay);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s var(--nav-ease);
+}
+
+.bmm-card:hover .bmm-card-actions,
+.bmm-card:focus-within .bmm-card-actions,
+.bmm-card.selected .bmm-card-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bmm-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.bmm-icon-btn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.bmm-icon-btn.active {
+  color: var(--favorite);
+}
+
+.bmm-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 4rem 1rem;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.bmm-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 0.2rem);
+  padding: 0;
+  background: var(--glass-overlay);
+  backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(1.1);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(1.1);
+  color: var(--foreground);
+  box-shadow: var(--shadow-float);
+  max-width: 28rem;
+  width: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
+  height: fit-content;
+  overflow: visible;
+}
+
+.bmm-dialog::backdrop {
+  background: color-mix(in oklab, black 42%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.bmm-dialog-body {
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: visible;
+}
+
+.bmm-dialog h3 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.bmm-dialog-message {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.bmm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.bmm-field label {
+  font-size: 0.75rem;
+  font-weight: 550;
+  color: var(--muted-foreground);
+}
+
+.bmm-field input,
+.bmm-field textarea {
+  height: 2.1rem;
+  padding: 0 0.65rem;
+  border-radius: var(--nav-item-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  outline: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bmm-field textarea {
+  height: auto;
+  min-height: 4rem;
+  padding: 0.5rem 0.65rem;
+  resize: vertical;
+}
+
+.bmm-field input:focus,
+.bmm-field textarea:focus {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+  box-shadow: none;
+}
+
+.bmm-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.bmm-dialog.bmm-tools-dialog {
+  width: calc(100vw - 3rem);
+  max-width: calc(100vw - 3rem);
+  height: calc(100vh - 3.5rem);
+  max-height: calc(100vh - 3.5rem);
+  height: calc(100dvh - 3.5rem);
+  max-height: calc(100dvh - 3.5rem);
+  overflow: hidden;
+}
+
+.bmm-tools-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  height: 100%;
+  min-height: 0;
+  padding: 0.85rem 1.15rem 1.1rem;
+}
+
+.bmm-tools-toast {
+  position: absolute;
+  top: 0.65rem;
+  z-index: 3;
+  max-width: min(90%, 24rem);
+}
+
+.bmm-tools-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.bmm-tools-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  min-width: 0;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.bmm-tools-title svg {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.bmm-tools-head-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+.bmm-tools-history-cfg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-right: 0.15rem;
+  border-right: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  margin-right: 0.1rem;
+}
+
+.bmm-tools-history-help-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.bmm-tools-history-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: help;
+  flex-shrink: 0;
+  transition: color 0.12s var(--nav-ease), background 0.12s var(--nav-ease);
+}
+
+.bmm-tools-history-help:hover {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+.bmm-tools-history-help-tip {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  z-index: 50;
+  width: max-content;
+  max-width: min(16rem, 70vw);
+  padding: 0.4rem 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--border) 75%, var(--foreground));
+  border-radius: 0.4rem;
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+  color: var(--foreground);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+  pointer-events: none;
+}
+
+.bmm-tools-history-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.bmm-tools-history-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 1.75rem;
+  padding: 0 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: var(--nav-tab-radius);
+  background: var(--glass-muted);
+  color: color-mix(in oklab, var(--foreground) 78%, var(--muted-foreground));
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.12s var(--nav-ease),
+    background 0.12s var(--nav-ease),
+    color 0.12s var(--nav-ease);
+}
+
+.bmm-tools-history-trigger:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+  color: var(--foreground);
+}
+
+.bmm-tools-history-trigger.open {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 8%, var(--glass-muted));
+  color: var(--foreground);
+}
+
+.bmm-tools-history-trigger:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.bmm-tools-history-chevron {
+  opacity: 0.72;
+  transition: transform 0.14s var(--nav-ease);
+}
+
+.bmm-tools-history-trigger.open .bmm-tools-history-chevron {
+  transform: rotate(180deg);
+}
+
+.bmm-tools-history-stepper {
+  display: inline-flex;
+  align-items: center;
+  height: 1.65rem;
+  padding: 0.1rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+}
+
+.bmm-tools-history-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.45rem;
+  border: 0;
+  border-radius: 0.28rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    background 0.12s var(--nav-ease),
+    color 0.12s var(--nav-ease);
+}
+
+.bmm-tools-history-step:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+  color: var(--foreground);
+}
+
+.bmm-tools-history-step:active:not(:disabled) {
+  background: color-mix(in oklab, var(--primary) 16%, transparent);
+  color: var(--foreground);
+}
+
+.bmm-tools-history-step:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.bmm-tools-history-value {
+  min-width: 1.75rem;
+  padding: 0 0.1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+  user-select: none;
+}
+
+.bmm-tools-history-menu {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bmm-tools-history-panel {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  right: 0;
+  z-index: 45;
+  width: min(22rem, calc(100vw - 2rem));
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.65rem 0.7rem 0.7rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-tools-history-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.bmm-tools-history-panel-meta {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.bmm-tools-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  max-height: min(16rem, 42vh);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.bmm-tools-history-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.42rem;
+  background: color-mix(in oklab, var(--glass-muted) 70%, transparent);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.12s var(--nav-ease),
+    background 0.12s var(--nav-ease);
+}
+
+.bmm-tools-history-item:hover {
+  border-color: color-mix(in oklab, var(--border) 88%, var(--foreground));
+  background: color-mix(in oklab, var(--primary) 8%, var(--glass-muted));
+}
+
+.bmm-tools-history-item.active {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 12%, var(--glass-muted));
+}
+
+.bmm-tools-history-item-main {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.bmm-tools-history-item-index {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.bmm-tools-history-item-preview {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--foreground);
+  word-break: break-all;
+}
+
+.bmm-tools-history-item-meta {
+  display: inline-flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.18rem;
+}
+
+.bmm-tools-history-item-tag {
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.bmm-tools-history-item-size {
+  font-size: 0.625rem;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.bmm-tools-history-empty {
+  margin: 0;
+  padding: 0.35rem 0.15rem 0.15rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-tools-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bmm-json-random {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bmm-json-random-panel {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  z-index: 40;
+  width: min(20.5rem, calc(100vw - 4rem));
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.7rem 0.75rem 0.75rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-json-random-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.bmm-json-random-row.col {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.bmm-json-random-label {
+  flex-shrink: 0;
+  min-width: 4.2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.bmm-json-random-label em {
+  margin-left: 0.25rem;
+  font-style: normal;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.bmm-json-random-seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  padding: 0.12rem;
+  border-radius: 0.4rem;
+  background: var(--glass-muted);
+  border: 1px solid var(--border);
+}
+
+.bmm-json-random-seg button {
+  height: 1.45rem;
+  padding: 0 0.45rem;
+  border: 0;
+  border-radius: 0.28rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.bmm-json-random-seg button.active {
+  background: color-mix(in oklab, var(--primary) 18%, var(--glass-overlay));
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.bmm-json-random-range {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--primary);
+}
+
+.bmm-json-random-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.bmm-json-random-chip {
+  height: 1.5rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted-foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.bmm-json-random-chip.on {
+  border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  color: var(--foreground);
+}
+
+.bmm-json-random-run {
+  width: 100%;
+  justify-content: center;
+}
+
+.bmm-tools-err {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.bmm-tools-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bmm-tools-url-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.bmm-tools-panes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.bmm-tools-panes.stacked {
+  grid-template-columns: 1fr;
+}
+
+.bmm-tools-pane {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.bmm-tools-pane-label {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 550;
+  color: var(--muted-foreground);
+}
+
+.bmm-tools-pane-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.bmm-json-tree-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.bmm-json-tree-actions .bmm-btn {
+  height: 1.75rem;
+  padding: 0 0.45rem;
+  font-size: 0.6875rem;
+  gap: 0.25rem;
+}
+
+.bmm-tools-meta {
+  color: color-mix(in oklab, var(--foreground) 72%, var(--muted-foreground));
+  font-weight: 500;
+}
+
+.bmm-tools-search {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: min(100%, 11rem);
+  height: 1.75rem;
+  padding: 0 0.55rem;
+  border-radius: var(--nav-tab-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--muted-foreground);
+}
+
+.bmm-tools-search:focus-within {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+  color: var(--foreground);
+}
+
+.bmm-tools-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 0.75rem;
+}
+
+.bmm-tools-json-view {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border-radius: var(--nav-item-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  padding: 0.45rem 0.35rem;
+}
+
+.bmm-tools-json-view.error {
+  border-color: color-mix(in oklab, var(--danger) 45%, var(--border));
+}
+
+.bmm-json-tree-root {
+  --bmm-json-indent: 2ch;
+  --bmm-json-dot: 1ch;
+  --bmm-json-gap: 1ch;
+  min-width: min-content;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--foreground);
+}
+
+.bmm-json-branch {
+  position: relative;
+}
+
+.bmm-json-children {
+  padding-left: var(--bmm-json-indent);
+  position: relative;
+}
+
+.bmm-json-children::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--bmm-json-dot) * 0.5 - 0.5px);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: color-mix(in oklab, var(--border) 88%, var(--foreground));
+  pointer-events: none;
+}
+
+.bmm-json-root-branch > .bmm-json-children::before {
+  content: none;
+}
+
+.bmm-json-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  min-height: calc(0.78rem * 1.55);
+}
+
+.bmm-json-dot-slot {
+  width: var(--bmm-json-dot);
+  min-width: var(--bmm-json-dot);
+  flex: 0 0 var(--bmm-json-dot);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.bmm-json-dot-slot-close {
+  width: auto;
+  min-width: var(--bmm-json-dot);
+  flex: 0 0 auto;
+  justify-content: flex-start;
+}
+
+.bmm-json-gap-slot {
+  width: var(--bmm-json-gap);
+  min-width: var(--bmm-json-gap);
+  flex: 0 0 var(--bmm-json-gap);
+}
+
+.bmm-json-body {
+  flex: 1;
+  min-width: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.bmm-json-dot {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--bmm-json-dot) * 1.85);
+  height: calc(var(--bmm-json-dot) * 1.85);
+  padding: 0;
+  border: 1px solid color-mix(in oklab, var(--primary) 40%, var(--border));
+  border-radius: 0.22rem;
+  background: var(--glass-overlay);
+  color: color-mix(in oklab, var(--primary) 70%, var(--foreground));
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition:
+    background 0.14s var(--nav-ease),
+    border-color 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease),
+    transform 0.14s var(--nav-ease);
+}
+
+.bmm-json-dot:hover {
+  border-color: color-mix(in oklab, var(--primary) 72%, var(--border));
+  color: var(--foreground);
+  transform: scale(1.06);
+}
+
+.bmm-json-dot.collapsed {
+  background: color-mix(in oklab, var(--primary) 16%, var(--glass-overlay));
+  border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
+}
+
+.bmm-json-row.selected {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  border-radius: 0.28rem;
+  outline: 1px solid color-mix(in oklab, var(--primary) 28%, transparent);
+}
+
+.bmm-json-row:not(.bmm-json-close) {
+  cursor: pointer;
+}
+
+.bmm-json-key {
+  color: color-mix(in oklab, var(--primary) 82%, var(--foreground));
+}
+
+.bmm-json-key.hit {
+  border-radius: 0.12rem;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--favorite) 35%, transparent);
+  background: color-mix(in oklab, var(--favorite) 22%, transparent);
+}
+
+.bmm-json-colon,
+.bmm-json-bracket,
+.bmm-json-comma {
+  color: var(--muted-foreground);
+}
+
+.bmm-json-value {
+  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.bmm-json-value.kind-string {
+  color: color-mix(in oklab, var(--success, #16a34a) 68%, var(--foreground));
+}
+
+.bmm-json-value.kind-number {
+  color: color-mix(in oklab, var(--primary) 70%, var(--foreground));
+}
+
+.bmm-json-value.kind-boolean {
+  color: color-mix(in oklab, var(--favorite) 62%, var(--foreground));
+}
+
+.bmm-json-value.kind-null {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+.bmm-json-value.kind-object,
+.bmm-json-value.kind-undefined {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+.bmm-json-preview,
+.bmm-json-meta {
+  color: var(--muted-foreground);
+  font-style: italic;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bmm-json-meta {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding-left: 1.5ch;
+}
+
+.bmm-json-close {
+  min-height: calc(0.78rem * 1.55);
+}
+
+.bmm-tools-json-empty {
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.bmm-tools-json-empty.muted {
+  color: var(--muted-foreground);
+}
+
+.bmm-tools-json-hits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-height: 4.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+}
+
+.bmm-tools-json-hits li {
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.bmm-tools-textarea {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  resize: none;
+  padding: 0.7rem 0.8rem;
+  border-radius: var(--nav-item-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  outline: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bmm-tools-textarea:focus {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+}
+
+.bmm-tools-textarea.error {
+  border-color: color-mix(in oklab, var(--danger) 45%, var(--border));
+}
+
+.bmm-tools-textarea[readonly] {
+  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.bmm-json-editor {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  border-radius: var(--nav-item-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  overflow: hidden;
+}
+
+.bmm-json-editor.error {
+  border-color: color-mix(in oklab, var(--danger) 45%, var(--border));
+}
+
+.bmm-json-editor-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.4rem 0.65rem;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--danger) 28%, var(--border));
+  background: color-mix(in oklab, var(--danger) 12%, transparent);
+  color: color-mix(in oklab, var(--danger) 82%, var(--foreground));
+  font-size: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bmm-json-editor-banner:hover {
+  background: color-mix(in oklab, var(--danger) 18%, transparent);
+}
+
+.bmm-json-editor-banner svg {
+  flex-shrink: 0;
+}
+
+.bmm-json-editor-banner-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bmm-json-editor-jump {
+  flex-shrink: 0;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.bmm-json-editor-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.bmm-json-gutter {
+  flex: 0 0 auto;
+  min-width: 2.4rem;
+  overflow: hidden;
+  padding: 0.7rem 0.35rem 0.7rem 0.45rem;
+  border-right: 1px solid var(--border);
+  background: color-mix(in oklab, var(--glass-muted) 70%, var(--muted));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: right;
+  color: var(--muted-foreground);
+  user-select: none;
+}
+
+.bmm-json-gutter-line {
+  display: block;
+  height: calc(0.78rem * 1.5);
+}
+
+.bmm-json-gutter-line.bad {
+  margin-inline: -0.35rem -0.35rem;
+  padding-inline: 0.35rem;
+  border-radius: 0.2rem;
+  background: color-mix(in oklab, var(--danger) 22%, transparent);
+  color: color-mix(in oklab, var(--danger) 85%, var(--foreground));
+  font-weight: 700;
+}
+
+.bmm-json-editor-ta {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none;
+}
+
+.bmm-json-err-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.85rem 0.9rem;
+  color: var(--foreground);
+}
+
+.bmm-json-err-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--danger) 78%, var(--foreground));
+}
+
+.bmm-json-err-title svg {
+  flex-shrink: 0;
+}
+
+.bmm-json-err-loc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bmm-json-err-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--danger) 30%, var(--border));
+  background: color-mix(in oklab, var(--danger) 10%, transparent);
+  color: color-mix(in oklab, var(--danger) 75%, var(--foreground));
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.bmm-json-err-badge.muted {
+  border-color: var(--border);
+  background: var(--glass-muted);
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.bmm-json-err-jump-btn {
+  height: 1.55rem;
+  padding-inline: 0.55rem;
+  font-size: 0.72rem;
+}
+
+.bmm-json-err-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.bmm-json-err-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bmm-json-err-msg {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.bmm-json-err-tip {
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--favorite) 12%, transparent);
+  border: 1px solid color-mix(in oklab, var(--favorite) 22%, var(--border));
+  color: color-mix(in oklab, var(--foreground) 90%, var(--muted-foreground));
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.bmm-json-err-snippet {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--foreground);
+}
+
+@media (max-width: 720px) {
+  .bmm-tools-panes {
+    grid-template-columns: 1fr;
+  }
+
+  .bmm-dialog.bmm-tools-dialog {
+    width: calc(100vw - 1.5rem);
+    max-width: calc(100vw - 1.5rem);
+    height: calc(100vh - 2rem);
+    max-height: calc(100vh - 2rem);
+    height: calc(100dvh - 2rem);
+    max-height: calc(100dvh - 2rem);
+  }
+}
+
+.bmm-icon-dialog {
+  max-width: 36rem;
+}
+
+.bmm-icon-dialog .bmm-dialog-body {
+  max-height: min(36rem, calc(100vh - 2rem));
+  overflow: hidden;
+}
+
+.bmm-icon-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.bmm-icon-dialog-head .bmm-dialog-message {
+  margin-bottom: 0;
+}
+
+.bmm-icon-dialog-preview {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  flex-shrink: 0;
+  border-radius: 0.45rem;
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+}
+
+.bmm-icon-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+}
+
+.bmm-icon-tab {
+  height: 1.75rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease);
+}
+
+.bmm-icon-tab:hover {
+  color: var(--foreground);
+}
+
+.bmm-icon-tab.active {
+  background: color-mix(in oklab, var(--primary) 14%, var(--background));
+  color: var(--foreground);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 22%, transparent);
+}
+
+.bmm-icon-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 0;
+  flex: 1;
+}
+
+.bmm-icon-scroll {
+  max-height: 16.5rem;
+  overflow: auto;
+  padding-right: 0.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bmm-icon-section-title {
+  margin: 0 0 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.bmm-icon-search {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 1.9rem;
+  padding: 0 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--muted-foreground);
+}
+
+.bmm-icon-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+}
+
+.bmm-icon-hint {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.3rem;
+}
+
+.bmm-icon-grid.lucide {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.bmm-icon-opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.4rem;
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.14s var(--nav-ease),
+    border-color 0.14s var(--nav-ease),
+    color 0.14s var(--nav-ease);
+}
+
+.bmm-icon-opt.lucide {
+  font-size: 0;
+  color: color-mix(in oklab, var(--foreground) 82%, var(--primary));
+}
+
+.bmm-icon-opt-fallback {
+  opacity: 0.35;
+  font-size: 0.9rem;
+}
+
+.bmm-icon-opt:hover {
+  background: var(--muted);
+  border-color: var(--border);
+}
+
+.bmm-icon-opt.selected {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+.bmm-select {
+  position: relative;
+  width: 100%;
+}
+
+.bmm-select.size-sm {
+  width: auto;
+  min-width: 8.5rem;
+}
+
+.bmm-select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  height: 2.1rem;
+  padding: 0 0.55rem 0 0.65rem;
+  border-radius: var(--nav-item-radius);
+  border: 1px solid var(--border);
+  background: var(--glass-muted);
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.14s var(--nav-ease);
+}
+
+.bmm-select.size-sm .bmm-select-trigger {
+  height: 1.75rem;
+  padding: 0 0.4rem 0 0.55rem;
+  font-size: 0.75rem;
+  background: var(--glass);
+}
+
+.bmm-select-trigger:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--foreground) 16%, var(--border));
+}
+
+.bmm-select.open .bmm-select-trigger,
+.bmm-select-trigger:focus-visible {
+  border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
+  box-shadow: none;
+}
+
+.bmm-select.disabled .bmm-select-trigger {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bmm-select.empty .bmm-select-label {
+  color: var(--muted-foreground);
+}
+
+.bmm-select-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bmm-select-chevron {
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+  transition: transform 0.16s var(--nav-ease);
+}
+
+.bmm-select.open .bmm-select-chevron {
+  transform: rotate(180deg);
+}
+
+.bmm-select-panel {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  right: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  max-height: 16rem;
+  overflow: hidden;
+  padding: 0;
+  border-radius: calc(var(--radius) + 0.05rem);
+  border: 1px solid var(--border);
+  background: var(--glass-overlay);
+  backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(1.1);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 4px)) saturate(1.1);
+  box-shadow: var(--shadow-float);
+}
+
+.bmm-select.size-sm .bmm-select-panel {
+  right: auto;
+  min-width: 100%;
+  width: max-content;
+  max-width: 18rem;
+  max-height: 14rem;
+}
+
+/* shadcn Command 式：底部分割，无强发光 */
+.bmm-select-search {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  border: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 88%, transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  box-shadow: none;
+}
+
+.bmm-select-search:focus-within {
+  border-color: color-mix(in oklab, var(--border) 88%, transparent);
+  box-shadow: none;
+}
+
+.bmm-select-search > svg {
+  flex-shrink: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin: 0;
+  opacity: 0.55;
+}
+
+.bmm-select-search input {
+  flex: 1;
+  min-width: 0;
+  height: 1.35rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  outline: none;
+  box-shadow: none;
+  text-indent: 0;
+}
+
+.bmm-select-search input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.bmm-select-search input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.85;
+}
+
+.bmm-select-search input::-webkit-search-decoration,
+.bmm-select-search input::-webkit-search-cancel-button,
+.bmm-select-search input::-webkit-search-results-button,
+.bmm-select-search input::-webkit-search-results-decoration {
+  appearance: none;
+  display: none;
+}
+
+.bmm-select-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.3rem;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 30%, transparent)
+    transparent;
+}
+
+.bmm-select-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.bmm-select-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bmm-select-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted-foreground) 30%, transparent);
+}
+
+.bmm-select-empty {
+  padding: 0.75rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.bmm-select-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.55rem;
+  border: 0;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.bmm-select.size-sm .bmm-select-option {
+  padding: 0.35rem 0.45rem;
+  font-size: 0.75rem;
+}
+
+.bmm-select-option:hover,
+.bmm-select-option.active {
+  background: var(--muted);
+}
+
+.bmm-select-option.selected {
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  color: var(--primary);
+  font-weight: 550;
+}
+
+.bmm-select-option-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bmm-select-check {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+/* —— Unified action rails (batch + arrange) —— */
+.bmm-rails {
+  position: relative;
+  z-index: 30;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 1.15rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--card-solid);
+  box-shadow: var(--shadow-soft);
+}
+
+.bmm-rails.dual .bmm-rail + .bmm-rail {
+  border-top: 1px solid var(--border-soft);
+}
+
+.bmm-rail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.55rem;
+  padding: 0.4rem 0.55rem 0.4rem 0.65rem;
+}
+
+.bmm-rail-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  height: 1.35rem;
+  padding: 0 0.45rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--border-soft);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.bmm-rail-batch .bmm-rail-pill {
+  border-color: color-mix(in oklab, var(--primary) 18%, var(--border));
+  background: color-mix(in oklab, var(--primary) 10%, var(--muted));
+  color: var(--foreground);
+}
+
+.bmm-rail-arrange .bmm-rail-pill {
+  border-color: color-mix(in oklab, var(--favorite) 22%, var(--border));
+  background: color-mix(in oklab, var(--favorite) 12%, var(--muted));
+  color: var(--foreground);
+}
+
+.bmm-rail-probe .bmm-rail-pill {
+  border-color: color-mix(in oklab, var(--danger) 28%, var(--border));
+  background: color-mix(in oklab, var(--danger) 14%, var(--muted));
+  color: var(--foreground);
+}
+
+.bmm-rail-probe .bmm-rail-pill.scanning {
+  animation: bmm-probe-pulse 1.2s var(--nav-ease) infinite;
+}
+
+@keyframes bmm-probe-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.bmm-rail-meta {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.bmm-rail-hint {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.6875rem;
+  font-weight: 450;
+  color: var(--muted-foreground);
+  opacity: 0.9;
+}
+
+.bmm-rail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.bmm-rail-actions .bmm-btn {
+  height: 1.7rem;
+  padding: 0 0.55rem;
+  font-size: 0.75rem;
+}
+
+.bmm-rail-exit {
+  flex-shrink: 0;
+  margin-left: auto;
+  height: 1.7rem;
+  padding: 0 0.6rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.bmm-rail-exit:hover {
+  color: var(--foreground);
+}
+
+.bmm-view-switch {
+  display: inline-flex;
+  margin-left: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--nav-tab-radius);
+  overflow: hidden;
+  background: var(--glass-muted);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bmm-view-switch button {
+  height: 1.75rem;
+  padding: 0 0.55rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.bmm-view-switch button.active {
+  background: var(--glass-strong);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.bmm-popup {
+  width: 320px;
+  padding: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: var(--glass-overlay);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  border: 1px solid var(--border);
+}
+
+/* Popup is short — open folder menu upward so it isn’t clipped */
+.bmm-popup .bmm-select-panel {
+  top: auto;
+  bottom: calc(100% + 0.3rem);
+  max-height: 11rem;
+}

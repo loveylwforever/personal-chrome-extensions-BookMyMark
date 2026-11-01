@@ -1,0 +1,32 @@
+{
+  "name": "bookmymark",
+  "description": "Chrome bookmark manager inspired by OhMyNote nav",
+  "private": true,
+  "version": "0.6.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "check:netscape": "node --experimental-strip-types scripts/check-netscape.mts",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^0.525.0",
+    "vue": "^3.5.29"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@wxt-dev/module-vue": "^1.0.3",
+    "playwright": "^1.62.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5",
+    "vue-tsc": "^3.2.5",
+    "wxt": "^0.21.3"
+  }
+}
